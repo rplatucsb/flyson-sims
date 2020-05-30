@@ -1,12 +1,15 @@
-from .rocket import RocketState
-from .env import Environment
-class SimIter:
+from .rockstate import RocketState
+from .envstate import EnvironmentState
 
-    env = Environment()
+class SimIter:
+    envstate = EnvironmentState()
     rockstate = RocketState()
 
     def __iter__(self):
-        return self
+        # do controls
+        # propagate airbrakes
+        # propagate environment
+        return rockstate
 
     def next(self):
         raise StopIteration
