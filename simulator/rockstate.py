@@ -10,6 +10,7 @@ class RocketState(np.ndarray):
     Time: Seconds
     Mass: Kilograms
     Angles: Radians
+    Current: Amps
     
     All others are derived from these.
     """
@@ -20,6 +21,7 @@ class RocketState(np.ndarray):
     avelocity = np.array(0) # position of base
     orientation = 0 # store this in euler angles or quaternions
     abrake_extension = np.array(0) # 3-vector for each airbrake extension in radians
+    abrake_amps_prop = np.array(0) # 3-vector for the current through each abrake motor
 
     def euler(self):
         """
@@ -92,3 +94,10 @@ class RocketState(np.ndarray):
         """
         raise NotImplementedError
         return self.abrake_extension
+
+    def abrake_amps(self):
+        """
+        :return: ndarray(double) 3-vector of current through each airbrake motor
+        """
+        raise NotImplementedError
+        return self.abrake_amps_prop
