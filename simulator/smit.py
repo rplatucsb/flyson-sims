@@ -1,10 +1,10 @@
 from .rockstate import RocketState
 from .envstate import EnvironmentState
-
+'''
 import motor
 import controller
 import abrakes
-
+'''
 class SimIter:
     """
     The main loop of the simulator, implemented as an iterator for increased
@@ -17,7 +17,7 @@ class SimIter:
 
     def __iter__(self):
         return self
-
+    '''
     def next(self):
         """
         :return: the state of the rocket at time t + dt
@@ -27,3 +27,4 @@ class SimIter:
         abrake_amps = controller.sysinput(self.rockstate)
         self.rockstate = abrakes.step(self.rockstate)
         return self.rockstate
+    '''
