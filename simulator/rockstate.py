@@ -27,6 +27,23 @@ class RocketState(np.ndarray):
     abrake_current = np.array(0)  # 3-vector for each airbrake extension in radians
     abrake_desired = np.array(0)  # 3-vector for the current through each abrake motor
 
+    def __init__(self, pos, vel, rot, am, ac, ad):
+        """
+        :param pos: ndarray(double, 3vec) position
+        :param vel: ndarray(double, 3vec) velocity
+        :param rot: Rotation, orientation of rocket
+        :param am: ndarray(double, 3vec), angular momentum
+        :param ac: ndarray(double, 3vec), airbrake current
+        :param ad: ndarray(double, 3vec), airbrake desired
+        :return: New rocketstate
+        """
+        self.position = pos
+        self.velocity = vel
+        self.orientation = rot
+        self.angular_momentum = am
+        self.abrake_current = ac
+        self.abrake_desired = ad
+
     def get_momentum(self):
         return self.velocity * self.MASS
 
@@ -37,8 +54,6 @@ class RocketState(np.ndarray):
         """
         r = r.as_matrix(r)
         return r
-
-
 
     def omega(self, rot_matrix, L):
         """
@@ -55,7 +70,6 @@ class RocketState(np.ndarray):
         :return: ndarray(double) the total apparent velocity
         """
         return NotImplementedError
-
 
     def ang_of_att(self, v_app):
         """
