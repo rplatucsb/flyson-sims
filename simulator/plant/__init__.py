@@ -1,3 +1,5 @@
+import functions
+
 def step(rockstate, envstate, dt):
     """
     :param rockstate: the current state off the rocket (type RocketState)
@@ -8,7 +10,9 @@ def step(rockstate, envstate, dt):
     """
     raise NotImplementedError
 
-def RK4(equation, state, time, dt):
+
+
+def RK4(equation, state, dt, time=0):
     """
     :param equation: function in the form y' = f(t,y), that describes the change in some variable
     :param state: the current value of some variable in the rocket state at time t

@@ -13,11 +13,10 @@ class SimIter:
     envstate = EnvironmentState()
     rockstate = RocketState()
     time = 0
-    dt = 0 # small timestep
+    dt = 0  # small timestep
 
     def __iter__(self):
         return self
-    '''
     def next(self):
         """
         :return: the state of the rocket at time t + dt
@@ -27,4 +26,3 @@ class SimIter:
         abrake_amps = controller.sysinput(self.rockstate)
         self.rockstate = abrakes.step(self.rockstate)
         return self.rockstate
-    '''

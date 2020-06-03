@@ -1,6 +1,6 @@
 import numpy as np
 from scipy.spatial.transform import Rotation
-import math
+import functions
 
 class RocketState(np.ndarray):
     """

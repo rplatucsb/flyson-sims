@@ -18,7 +18,7 @@ def force_axial(velocity, aoa, mach, rey, roll_axis, abrakes):
     body_force = (3.9 / (60**2)) * velocity ** 2
     # TODO make airbrakes articulable
     abrake_force = np.sum((5.8/80) * (60 ** -2) * np.rad2deg(abrakes) * velocity**2)
-    return np.array([-(body_force + abrake_force), 0, 0])
+    return np.array([0, 0, -(body_force + abrake_force)])
 
 def force_normal(velocity, aoa, mach, rey, roll_axis):
     """
@@ -36,16 +36,17 @@ def force_thrust(time):
     :param time: current time
     :return: ndarray(double) the thrust force
     """
-    return np.array([f50(time), 0, ])
+    return np.array([0, 0, f50(time)])
 
 def force_gravity(altitude, mass):
     """"
+    :param mass: mass of the rocket
     :param altitude: current altitude from sea level
     :return: ndarray(array) the gravitational force
     """
-    g0 =9.80665
+    g0 = 9.80665
     R_e = 6.3781e6
-    return g0 * ((R_e / (R_e + altitude)) ** 2)
+    return np.array([0, 0, mass * g0 * ((R_e / (R_e + altitude)) ** 2)])
 
 def sum_forces(normal, axial, thrust, gravity):
     """
