@@ -82,6 +82,33 @@ class RocketState(np.ndarray):
     def ang_of_att(self, v_app):
         """
         :param v_app: apparent velocity of the rocket
-        :return: angle of attack of the rocket
+        :return: the current angle of attack of the rocket
         """
         return NotImplementedError
+
+    def reynolds(self, length, velocity, mu):
+        """
+        :param length: length of the rocket
+        :param velocity: apparent velocity
+        :param mu: kinematic viscosity
+        :return: the current Reynolds Number
+        """
+        return NotImplementedError
+
+    def mu(self, temp_ground, temp_alt, C):
+        """
+        :param temp_ground: reference temperature
+        :param temp_alt: temperature at current altitude
+        :param C: Sutherland's Constant
+        :return: the current kinetic viscosity
+        """
+        raise NotImplementedError
+
+    def mach_num(self, velocity, gamma, R, temp_alt):
+        """
+        :param velocity: apparent velocity of the rocket
+        :param gamma: ratio of specific heats of air
+        :param R: Reynold's Number
+        :param temp_alt: temperature at the current altitude
+        :return: the current Mach Number
+        """
