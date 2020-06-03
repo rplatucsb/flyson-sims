@@ -10,8 +10,19 @@ def step(rockstate, envstate, dt):
     :return: The predicted state of the rocket after time dt with appropriate
         effects of the environment and motor applied to it
     """
-    raise NotImplementedError
+    # TODO fill these in
+    aoa = 0
+    mach = 0
+    rey = 0
+    roll_axis = envstate.ref_roll
+    abrakes = rockstate.abrake_current
+    force_eq = lambda v: \
+            forces.axial(v, aoa, mach, rey, roll_axis, rockstate.abrake_extension) \
+            + forces.normal(v, aoa, mach, rey, roll_axis) \
+            + forces.thrust(envstate.time) \
+            + forces.gravity(position[2], MAX)
 
+    vn, xn = RK_force(force_eq, rockstate.get_velo(), rockstate.position, dt)
 
 
 def RK4(equation, state, dt, time=0):

@@ -4,7 +4,7 @@ Functions to calculate the forces acting on the rocket
 import numpy as np
 from .eng import f50
 
-def force_axial(velocity, aoa, mach, rey, roll_axis, abrakes):
+def axial(velocity, aoa, mach, rey, roll_axis, abrakes):
     """
     :param velocity: ndarray(double) apparent velocity of the rocket
     :param aoa: current angle of attack of the rocket
@@ -20,7 +20,7 @@ def force_axial(velocity, aoa, mach, rey, roll_axis, abrakes):
     abrake_force = np.sum((5.8/80) * (60 ** -2) * np.rad2deg(abrakes) * velocity**2)
     return np.array([0, 0, -(body_force + abrake_force)])
 
-def force_normal(velocity, aoa, mach, rey, roll_axis):
+def normal(velocity, aoa, mach, rey, roll_axis):
     """
     :param velocity: ndarray(double) apparent velocity of the rocket
     :param aoa: current angle of attack of the rocket
@@ -31,14 +31,14 @@ def force_normal(velocity, aoa, mach, rey, roll_axis):
     """
     return np.array([0, 0, 0]) # TODO make it not a 1-D sim
 
-def force_thrust(time):
+def thrust(time):
     """
     :param time: current time
     :return: ndarray(double) the thrust force
     """
     return np.array([0, 0, f50(time)])
 
-def force_gravity(altitude, mass):
+def gravity(altitude, mass):
     """"
     :param mass: mass of the rocket
     :param altitude: current altitude from sea level
