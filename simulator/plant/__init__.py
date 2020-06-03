@@ -1,6 +1,7 @@
 from .. import functions
 from . import forces
 from . import torque
+from ..rockstate import RocketState
 
 
 def step(rockstate, envstate, dt):
@@ -21,9 +22,11 @@ def step(rockstate, envstate, dt):
             forces.axial(v, aoa, mach, rey, roll_axis, rockstate.abrake_extension) \
             + forces.normal(v, aoa, mach, rey, roll_axis) \
             + forces.thrust(envstate.time) \
-            + forces.gravity(position[2], MAX)
+            + forces.gravity(rockstate.position[2], rockstate.MASS)
 
-    vn, xn = RK_force(force_eq, rockstate.get_velo(), rockstate.position, dt)
+    vn, xn = RK_force(force_eq, rockstate.get_velo(), rockstate.position, dt, rockstate.MASS)
+    new_rockstate = RocketState(vn, xn, 0, 0, rockstate.abrake_current, rockstate.abrake_desired)
+    return new_rockstate
 
 def RK4(equation, state, dt, time=0):
     """
