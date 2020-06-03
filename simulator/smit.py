@@ -13,6 +13,13 @@ class SimIter:
     time = 0
     dt = 0.01  # small timestep
 
+    def __init__(self):
+        self.rockstate = RocketState([0, 0, RocketState.CM], np.zeros(3), 0, \
+                                     np.zeros(3), np.zeros(3), np.zeros(3))
+        self.envstate = EnvironmentState()
+        self.time = 0
+        self.dt = 0.01
+
     def __iter__(self):
         return self
 
@@ -24,4 +31,8 @@ class SimIter:
         self.rockstate = plant.step(self.rockstate, self.envstate, self.dt)
         abrake_amps = controller.sysinput(self.rockstate)
         self.rockstate = plant.abrakes.step(self.rockstate)
+
+        if(self.rockstate.position[2] < 0):
+            raise StopIteration
+
         return self.rockstate
