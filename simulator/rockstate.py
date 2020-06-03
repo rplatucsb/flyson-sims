@@ -20,15 +20,15 @@ class RocketState(np.ndarray):
     LENGTH = .51  # length of the rocket
     CM = 0.3  # FIXME, initial center of mass from bottom of rocket
     position = np.array([0, 0, CM])  # position of CM
-    momentum = np.zeros(3)  # initial momentum of the rocket
+    velocity = np.zeros(3)  # initial momentum of the rocket
     q = np.array([0, 0, 0, 1])  # initial orientation of the rocket as quaternion
     orientation = Rotation.from_quat(q)  # Rotation object that stores the orientation
     angular_momentum = np.zeros(3)  # initial angular momentum of the rocket
     abrake_current = np.array(0)  # 3-vector for each airbrake extension in radians
     abrake_desired = np.array(0)  # 3-vector for the current through each abrake motor
 
-    def get_velo(self):
-        return self.momentum / self.MASS
+    def get_momentum(self):
+        return self.velocity * self.MASS
 
     def quat2mat(self, r):
         """
@@ -63,4 +63,3 @@ class RocketState(np.ndarray):
         :return: the current angle of attack of the rocket
         """
         return NotImplementedError
-    z

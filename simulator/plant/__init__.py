@@ -2,6 +2,7 @@ from .. import functions
 from . import forces
 from . import torque
 
+
 def step(rockstate, envstate, dt):
     """
     :param rockstate: the current state off the rocket (type RocketState)
@@ -24,7 +25,6 @@ def step(rockstate, envstate, dt):
 
     vn, xn = RK_force(force_eq, rockstate.get_velo(), rockstate.position, dt)
 
-
 def RK4(equation, state, dt, time=0):
     """
     :param equation: function in the form y' = f(t,y), that describes the change in some variable
@@ -34,22 +34,32 @@ def RK4(equation, state, dt, time=0):
     :return: the new value for the variable at time t + dt
     """
     k1 = dt * equation(time, state)
-    k2 = dt * equation(time + (dt/2), state + (k1/2))
-    k3 = dt * equation(time + (dt/2), state + (k2/2))
+    k2 = dt * equation(time + (dt / 2), state + (k1 / 2))
+    k3 = dt * equation(time + (dt / 2), state + (k2 / 2))
     k4 = dt * equation(time + dt, state + k3)
-    yk = state + (1.0/6) * (k1 + 2*k2 + 2*k3 + k4)
+    yk = state + (1.0 / 6) * (k1 + 2 * k2 + 2 * k3 + k4)
     return yk
 
-def RK_force(equation, velocity, position, dt):
-    k1v = dt * equation(velocity)
+
+def RK_force(equation, velocity, position, dt, mass):
+    """
+    :param mass: current mass of the rocket
+    :param equation: the equation for the total force in 1 direction of the rocket
+    :param velocity: the velocity in that direction
+    :param position: the position in that direction
+    :param dt: the time step
+    :return: the next velocity and position in that direction
+    """
+
+    k1v = dt * equation(velocity) / mass
     k1x = dt * velocity
-    k2v = dt * equation(velocity + k1v/2)
-    k2x = dt * (velocity + k1v/2)
-    k3v = dt * equation(velocity + k2v/2)
-    k3x = dt * (velocity + k2v/2)
-    k4v = dt * equation(velocity + k3v)
+    k2v = dt * equation(velocity + k1v / 2) / mass
+    k2x = dt * (velocity + k1v / 2)
+    k3v = dt * equation(velocity + k2v / 2) / mass
+    k3x = dt * (velocity + k2v / 2)
+    k4v = dt * equation(velocity + k3v) / mass
     k4x = dt * (velocity + k3v)
 
-    v_next = velocity + (1/6)*(k1v + 2*k2v + 2*k3v + k4v)
-    x_next = position + (1/6)*(k1x + 2*k2x + 2*k3x + k4x)
+    v_next = velocity + (1 / 6) * (k1v + 2 * k2v + 2 * k3v + k4v)
+    x_next = position + (1 / 6) * (k1x + 2 * k2x + 2 * k3x + k4x)
     return v_next, x_next
