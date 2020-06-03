@@ -15,3 +15,12 @@ class EnvironmentState():
     ref_temp = 291.15  # reference temperature in kelvin
     ref_vis = 1.827e-7  # reference viscosity in Pascals * seconds
     gamma = 1.4  # ratio of specific heats of air
+
+    def __init__(self):
+        """
+        :param dt: timestep
+        """
+        self.dt = dt
+
+    def step(self, dt):
+        return self.time += dt
