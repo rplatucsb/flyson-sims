@@ -18,7 +18,7 @@ class RocketState(np.ndarray):
     """
     MASS = 3  # FIXME: , initial mass of rocket
     LENGTH = .51  # length of the rocket
-    CM = 0.3  # fill in actual, initial center of mass from bottom of rocket
+    CM = 0.3  # FIXME, initial center of mass from bottom of rocket
     position = np.array([0, 0, CM])  # position of CM
     momentum = np.zeros(3)  # initial momentum of the rocket
     q = np.array([0, 0, 0, 1])  # initial orientation of the rocket as quaternion
@@ -38,13 +38,16 @@ class RocketState(np.ndarray):
         r = r.as_matrix(r)
         return r
 
-    def rot_inert(self): # FIXME: needs to change as mass changes
+    def rot_inert(self):  # FIXME: needs to change as mass changes
+        """
+        :return: the rotational inertia tensor for the rocket
+        """
         ixx = 60  # FIXME: not correct values
         iyy = 60
         izz = 60
-        return np.array([ixx, 0, 0],
-                        [0, iyy, 0],
-                        [0, 0, izz])
+        return np.array([[ixx, 0, 0],
+                         [0, iyy, 0],
+                         [0, 0, izz]])
 
     def omega(self, rot_matrix, L):
         """
@@ -112,3 +115,4 @@ class RocketState(np.ndarray):
         :param temp_alt: temperature at the current altitude
         :return: the current Mach Number
         """
+        return NotImplementedError

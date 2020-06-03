@@ -1,4 +1,4 @@
-from StringIO import StringIO
+from _io import StringIO
 import numpy as np
 
 class Engine:
