@@ -1,6 +1,7 @@
 """
 Functions to recover the forces and torques acting on the rocket
 """
+from .eng import f50
 
 def force_axial(velocity, aoa, mach, rey, roll_axis):
     """
@@ -29,7 +30,7 @@ def force_thrust(time):
     :param time: current time
     :return: ndarray(double) the thrust force
     """
-    return NotImplementedError
+    return np.array([f50(time), 0, 0])
 
 def force_gravity(altitude):
     """"
