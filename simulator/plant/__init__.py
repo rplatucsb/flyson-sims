@@ -1,4 +1,6 @@
-import functions
+from .. import functions
+from . import forces
+from . import torque
 
 def step(rockstate, envstate, dt):
     """
@@ -24,5 +26,19 @@ def RK4(equation, state, dt, time=0):
     k2 = dt * equation(time + (dt/2), state + (k1/2))
     k3 = dt * equation(time + (dt/2), state + (k2/2))
     k4 = dt * equation(time + dt, state + k3)
-    yk = (1.0/6) * (k1 + 2*k2 + 2*k3 + k4)
+    yk = state + (1.0/6) * (k1 + 2*k2 + 2*k3 + k4)
     return yk
+
+def RK_force(equation, velocity, position, dt):
+    k1v = dt * equation(velocity)
+    k1x = dt * velocity
+    k2v = dt * equation(velocity + k1v/2)
+    k2x = dt * (velocity + k1v/2)
+    k3v = dt * equation(velocity + k2v/2)
+    k3x = dt * (velocity + k2v/2)
+    k4v = dt * equation(velocity + k3v)
+    k4x = dt * (velocity + k3v)
+
+    v_next = velocity + (1/6)*(k1v + 2*k2v + 2*k3v + k4v)
+    x_next = position + (1/6)*(k1x + 2*k2x + 2*k3x + k4x)
+    return v_next, x_next
