@@ -10,7 +10,7 @@ vel = np.array(0)
 sm = SimIter()
 for r in sm:
     rs.append(r)
-    print(r.position, r.velocity, sm.envstate.time)
+    print('Altitude: {:.3f} Velocity: {:.3f} Time: {:.1f}'.format(r.position, r.velocity, sm.envstate.time))
     time = np.append(time, sm.envstate.time)
     pos = np.append(pos, r.position)
     vel = np.append(vel, r.velocity)
