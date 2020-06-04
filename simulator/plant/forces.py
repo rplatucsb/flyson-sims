@@ -17,7 +17,7 @@ def axial(velocity, aoa, mach, rey, roll_axis, abrakes):
     # TODO this is an eyeball from solidworks data; improve this regression
     body_force = (3.9 / (60**2)) * velocity ** 2
     # TODO make airbrakes articulable
-    abrake_force = np.sum((5.8/80) * (60 ** -2) * np.rad2deg(abrakes) * velocity**2)
+    abrake_force = (5.8/80) * (60 ** -2) * np.rad2deg(abrakes) * velocity**2
     return -(body_force + abrake_force)
 
 def normal(velocity, aoa, mach, rey, roll_axis):
@@ -46,7 +46,7 @@ def gravity(altitude, mass):
     """
     g0 = 9.80665
     R_e = 6.3781e6
-    return mass * g0 * ((R_e / (R_e + altitude)) ** 2)
+    return -mass * g0 * ((R_e / (R_e + altitude)) ** 2)
 
 def sum_forces(normal, axial, thrust, gravity):
     """

@@ -19,13 +19,11 @@ def step(rockstate, envstate, dt):
     roll_axis = envstate.ref_roll
     abrakes = rockstate.abrake_current
     force_eq = lambda v: \
-            forces.axial(v, aoa, mach, rey, roll_axis, rockstate.abrake_extension) \
-            + forces.normal(v, aoa, mach, rey, roll_axis) \
+            forces.axial(v, aoa, mach, rey, roll_axis, rockstate.abrake_current) \
             + forces.thrust(envstate.time) \
-            + forces.gravity(rockstate.position[2], rockstate.MASS)
-
-    vn, xn = RK_force(force_eq, rockstate.get_velo(), rockstate.position, dt, rockstate.MASS)
-    new_rockstate = RocketState(vn, xn, 0, 0, rockstate.abrake_current, rockstate.abrake_desired)
+            + forces.gravity(rockstate.position, rockstate.MASS)
+    vn, xn = RK_force(force_eq, rockstate.velocity, rockstate.position, dt, rockstate.MASS)
+    new_rockstate = RocketState(xn, vn, 0, 0, rockstate.abrake_current, rockstate.abrake_desired)
     return new_rockstate
 
 def RK4(equation, state, dt, time=0):

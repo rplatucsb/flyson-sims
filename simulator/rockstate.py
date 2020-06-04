@@ -2,7 +2,7 @@ import numpy as np
 from scipy.spatial.transform import Rotation
 
 
-class RocketState(np.ndarray):
+class RocketState():
     """
     RocketState stores information about the state of the rocket at a given time.
     Unit Standards
@@ -16,11 +16,11 @@ class RocketState(np.ndarray):
     
     All others are derived from these.
     """
-    MASS = 3  # FIXME: , initial mass of rocket
+    MASS = 0.4  # FIXME: , initial mass of rocket
     LENGTH = .51  # length of the rocket
     CM = 0.3  # FIXME, initial center of mass from bottom of rocket
-    position = np.array([0, 0, CM])  # position of CM
-    velocity = np.zeros(3)  # initial momentum of the rocket
+    position = CM  # position of CM
+    velocity = 0  # initial momentum of the rocket
     q = np.array([0, 0, 0, 1])  # initial orientation of the rocket as quaternion
     orientation = Rotation.from_quat(q)  # Rotation object that stores the orientation
     angular_momentum = np.zeros(3)  # initial angular momentum of the rocket
@@ -40,9 +40,9 @@ class RocketState(np.ndarray):
         self.position = pos
         self.velocity = vel
         self.orientation = rot
-        self.angular_momentum = am
-        self.abrake_current = ac
-        self.abrake_desired = ad
+        self.angular_momentum = int(am)
+        self.abrake_current = int(ac)
+        self.abrake_desired = int(ad)
 
     def get_momentum(self):
         return self.velocity * self.MASS
