@@ -5,5 +5,6 @@ rs = []
 sm = SimIter()
 for r in sm:
     rs.append(r)
+    print(r.position)
 
 pkl.dump(rs, open("firstrun.pkl", "wb"))

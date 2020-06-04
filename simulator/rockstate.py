@@ -2,7 +2,7 @@ import numpy as np
 from scipy.spatial.transform import Rotation
 
 
-class RocketState(np.ndarray):
+class RocketState():
     """
     RocketState stores information about the state of the rocket at a given time.
     Unit Standards
